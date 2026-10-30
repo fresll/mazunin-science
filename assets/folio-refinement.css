@@ -36,7 +36,7 @@ body[data-variant="c"] {
 .sheet-2 .sheet-illustration { color: var(--art-2); }
 .folio-sheet .sheet-name,
 .folio-deck:not([data-open="none"]) .sheet-name {
-  font-family: var(--sans); font-size: clamp(18px,min(2.55vw,10.5cqw),36px); font-weight: 400; line-height: 1.08; letter-spacing: -.025em; margin-top: 0; min-width: 0; max-width: 100%; overflow-wrap: anywhere; hyphens: auto;
+  font-family: var(--sans); font-size: clamp(18px,min(2.55vw,10.5cqw),36px); font-weight: 400; line-height: 1.08; letter-spacing: -.025em; margin-top: 0; min-width: 0; max-width: 100%; overflow-wrap: normal; word-break: normal; hyphens: none;
 }
 .folio-sheet .sheet-action { top: 24px; font-size: 28px; color: var(--ink); }
 .folio-sheet .sheet-project { color: var(--ink); border-color: #82959b; font-size: 12px; font-family: var(--sans); }
@@ -182,8 +182,9 @@ body[data-site="public"] .folio-sheet .sheet-spine { font-size: var(--type-utili
 body[data-site="public"] .folio-sheet .sheet-name,
 body[data-site="public"] .folio-deck:not([data-open="none"]) .sheet-name {
   font-size: var(--type-sheet);
-  overflow-wrap: anywhere;
-  hyphens: auto;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
 }
 body[data-site="public"] .folio-sheet .sheet-project,
 body[data-site="public"] .sheet-detail p,
@@ -214,4 +215,10 @@ body[data-site="public"] .content-flow .project-copy h3 {
   body[data-site="public"] .content-flow .discipline,
   body[data-site="public"] .content-flow .research-body { grid-template-columns: minmax(0, 1fr); }
   body[data-site="public"] .content-flow .discipline-foot { flex-wrap: wrap; }
+}
+
+/* Keep the longest heading within its sheet without splitting words. */
+body[data-site="public"] .folio-deck .sheet-1 .sheet-name { font-size: min(var(--type-sheet), 9cqw); }
+@media (min-width: 801px) {
+  body[data-site="public"] .folio-deck .folio-sheet:not(.sheet-1) .sheet-name { font-size: min(var(--type-sheet), 14cqw); }
 }

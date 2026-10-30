@@ -12,7 +12,7 @@ window.MS_CONTENT = {
     pathDescriptions: ['Дисциплины и курсы', 'Научные данные и ресурсы', 'Прикладные проекты'],
     orientationTitle: 'Три направления одной платформы', orientationLabel: 'Карта платформы',
     orientationNames: ['Образование', 'Исследовательские ресурсы', 'Технологии'],
-    orientationProjects: ['Молекулярная биология', 'PGT-mt Atlas', 'Modicum'],
+    orientationProjects: ['Молекулярная биология', 'Атлас ПГТ-мт', 'Modicum'],
     orientationMore: ['И другие дисциплины', 'И новые ресурсы', 'И новые проекты'],
     orientationNote: 'Разные области науки. Самостоятельные проекты. Общее пространство знаний.',
     transcription: 'Транскрипция', translation: 'Трансляция', protein: 'Белок',

@@ -68,6 +68,8 @@ assert.ok(publicMarkup.includes(sandbox.window.MS_RELEASE.links.molbio));
 for (const [search, lang] of [['', 'ru'], ['?lang=en', 'en']]) {
   const markup = renderPublic(search);
   const url = sandbox.window.MS_RELEASE.links.atlas[lang];
+  const atlasName = lang === 'ru' ? 'Атлас ПГТ-мт' : 'PGT-mt Atlas';
+  assert.ok(markup.includes(`>${atlasName} <span aria-hidden="true">↗</span></a>`), `${lang}: Atlas name must match the language`);
   assert.equal((markup.match(new RegExp(`href="${url}"`, 'g')) || []).length, 2, `${lang}: Atlas sheet and expanded action must use the correct URL`);
   assert.ok(markup.includes(`<small>${url.replace('https://','')}</small>`), `${lang}: visible Atlas address must match the link`);
   assert.ok(markup.includes(sandbox.window.MS_RELEASE.links.molbio), `${lang}: Molbio URL must remain unchanged`);
