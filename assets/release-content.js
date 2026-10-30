@@ -1,7 +1,7 @@
 /* Owner-approved resources for the first public release. */
 window.MS_RELEASE = {
   links: {
-    molbio: 'https://fresll.github.io/molbio/',
+    molbio: 'https://edu.mazunin.science/',
     atlas: { ru: 'https://atlas.mazunin.science/ru/', en: 'https://atlas.mazunin.science/en/' }
   },
   ru: {

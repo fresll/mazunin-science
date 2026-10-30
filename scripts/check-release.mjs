@@ -29,7 +29,7 @@ assert.ok(!entry.includes('../assets/'),'Homepage assets must resolve at the dom
 assert.equal(readFileSync(resolve(output,'CNAME'),'utf8').trim(),'mazunin.science');
 const sandbox={window:{}};
 runInNewContext(readFileSync(resolve(output,'assets/release-content.js'),'utf8'),sandbox);
-assert.equal(sandbox.window.MS_RELEASE.links.molbio,'https://fresll.github.io/molbio/');
+assert.equal(sandbox.window.MS_RELEASE.links.molbio,'https://edu.mazunin.science/');
 assert.equal(sandbox.window.MS_RELEASE.links.atlas.ru,'https://atlas.mazunin.science/ru/');
 assert.equal(sandbox.window.MS_RELEASE.links.atlas.en,'https://atlas.mazunin.science/en/');
 
