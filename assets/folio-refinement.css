@@ -155,3 +155,61 @@ body[data-variant="c"] {
     font-size: clamp(11px, 0.7vw, 14px);
   }
 }
+
+/* A shared, fluid type scale for the public homepage. The rem component lets
+   browser text enlargement grow every role, while vw adds room on wide screens. */
+body[data-site="public"] {
+  --type-utility: clamp(.75rem, .65rem + .25vw, .875rem);
+  --type-secondary: clamp(.8125rem, .7rem + .25vw, .9375rem);
+  --type-body: clamp(.9375rem, .8rem + .3vw, 1.125rem);
+  --type-nav: clamp(.875rem, .7rem + .26vw, 1.0625rem);
+  --type-heading: clamp(1.375rem, 1.1rem + .7vw, 2.25rem);
+  --type-sheet: clamp(1.5rem, 1.2rem + 1.2vw, 2.875rem);
+}
+body[data-site="public"] .brand {
+  font-size: clamp(1.25rem, .95rem + .55vw, 1.75rem);
+}
+body[data-site="public"] .site-header { flex-wrap: wrap; padding-block: .5rem; }
+body[data-site="public"] .main-nav { font-size: var(--type-nav); flex-wrap: wrap; min-width: 0; }
+body[data-site="public"] .language-link,
+body[data-site="public"] .menu-toggle { font-size: var(--type-utility); }
+body[data-site="public"] .folio-heading h1.eyebrow { font-size: var(--type-heading); overflow-wrap: anywhere; }
+body[data-site="public"] .folio-intro { font-size: var(--type-body); }
+body[data-site="public"] .folio-instruction,
+body[data-site="public"] .folio-sheet .sheet-spine { font-size: var(--type-utility); }
+body[data-site="public"] .folio-sheet .sheet-name,
+body[data-site="public"] .folio-deck:not([data-open="none"]) .sheet-name {
+  font-size: var(--type-sheet);
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+body[data-site="public"] .folio-sheet .sheet-project,
+body[data-site="public"] .sheet-detail p,
+body[data-site="public"] .sheet-detail > a { font-size: var(--type-body); }
+body[data-site="public"] .folio-sheet .sheet-project small { font-size: var(--type-secondary); }
+body[data-site="public"] .folio-hero { border-bottom: 0; }
+body[data-site="public"] .content-flow .section-kicker,
+body[data-site="public"] .content-flow .eyebrow,
+body[data-site="public"] .content-flow .mono,
+body[data-site="public"] .content-flow .project-status,
+body[data-site="public"] .site-footer p { font-size: var(--type-utility); overflow-wrap: anywhere; }
+body[data-site="public"] .content-flow .section-intro,
+body[data-site="public"] .content-flow .discipline-copy > p:not(.eyebrow),
+body[data-site="public"] .content-flow .project-copy > p:not(.eyebrow),
+body[data-site="public"] .content-flow .catalog-note p,
+body[data-site="public"] .content-flow .catalog-note strong,
+body[data-site="public"] .content-flow .development-placeholder > p:last-child,
+body[data-site="public"] .content-flow .text-link { font-size: var(--type-body); }
+body[data-site="public"] .content-flow .resource-address { font-size: var(--type-secondary) !important; }
+body[data-site="public"] .content-flow .section-heading h2,
+body[data-site="public"] .content-flow .discipline h3,
+body[data-site="public"] .content-flow .project-copy h3 {
+  font-size: clamp(2rem, 1.5rem + 1.3vw, 3rem);
+  overflow-wrap: anywhere;
+}
+@media (max-width: 800px) {
+  body[data-site="public"] .folio-sheet .sheet-spine { font-size: var(--type-utility) !important; }
+  body[data-site="public"] .content-flow .discipline,
+  body[data-site="public"] .content-flow .research-body { grid-template-columns: minmax(0, 1fr); }
+  body[data-site="public"] .content-flow .discipline-foot { flex-wrap: wrap; }
+}
