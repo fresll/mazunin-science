@@ -18,15 +18,16 @@
   const ids = ['education', 'research', 'technology', 'updates', 'about'];
   const lines = s => s.replace(/\n/g, '<br>');
   const arrow = '<span aria-hidden="true">↗</span>';
-  const button = (key, text) => release?.links[key] ? `<a class="text-link resource-link" href="${release.links[key]}">${text}${arrow}</a><p class="resource-address">${release.links[key]}</p>` : `<button class="text-link" type="button" data-project="${key}">${text}${arrow}</button>`;
+  const resourceUrl = key => key === 'atlas' ? release?.links.atlas[lang] : release?.links[key];
+  const button = (key, text) => resourceUrl(key) ? `<a class="text-link resource-link" href="${resourceUrl(key)}">${text}${arrow}</a><p class="resource-address">${resourceUrl(key)}</p>` : `<button class="text-link" type="button" data-project="${key}">${text}${arrow}</button>`;
   const brand = `<a class="brand" href="#top" aria-label="MAZUNIN / SCIENCE"><span>MAZUNIN<span class="brand-slash"> /</span></span><span>SCIENCE<span class="brand-dot">.</span></span></a>`;
   const resourceKeys = ['molbio','atlas'];
   const sheetProject = i => {
-    const url = release?.links[resourceKeys[i]];
+    const url = resourceUrl(resourceKeys[i]);
     return url ? `<a class="sheet-resource" href="${url}" aria-label="${t.orientationMore[i]}: ${t.orientationProjects[i]}">${t.orientationProjects[i]} ${arrow}</a><small>${url.replace('https://','')}</small>` : `<span>${t.orientationProjects[i]}</span><small>${t.orientationMore[i]}</small>`;
   };
   const sheetAction = (id,i) => {
-    const url = release?.links[resourceKeys[i]];
+    const url = resourceUrl(resourceKeys[i]);
     return url ? `<a href="${url}">${t.orientationMore[i]} ${arrow}</a>` : isPublic ? '' : `<a href="#${id}">${lang==='ru'?'Перейти в раздел':'Go to section'} ${arrow}</a>`;
   };
   const development = `<div class="development-placeholder section-body"><p class="project-status">${t.pending}</p><p>${t.developmentText || ''}</p></div>`;

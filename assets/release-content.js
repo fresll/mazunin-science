@@ -2,7 +2,7 @@
 window.MS_RELEASE = {
   links: {
     molbio: 'https://fresll.github.io/molbio/',
-    atlas: 'https://fresll.github.io/pgt-mt-atlas/ru/'
+    atlas: { ru: 'https://atlas.mazunin.science/ru/', en: 'https://atlas.mazunin.science/en/' }
   },
   ru: {
     orientationMore: ['Открыть курс', 'Открыть атлас', 'В разработке'],

@@ -30,7 +30,8 @@ assert.equal(readFileSync(resolve(output,'CNAME'),'utf8').trim(),'mazunin.scienc
 const sandbox={window:{}};
 runInNewContext(readFileSync(resolve(output,'assets/release-content.js'),'utf8'),sandbox);
 assert.equal(sandbox.window.MS_RELEASE.links.molbio,'https://fresll.github.io/molbio/');
-assert.equal(sandbox.window.MS_RELEASE.links.atlas,'https://fresll.github.io/pgt-mt-atlas/ru/');
+assert.equal(sandbox.window.MS_RELEASE.links.atlas.ru,'https://atlas.mazunin.science/ru/');
+assert.equal(sandbox.window.MS_RELEASE.links.atlas.en,'https://atlas.mazunin.science/en/');
 
 // Execute the shipped scripts with a minimal document and inspect what the app
 // inserts into #app. This checks generated markup, not merely its source code.
@@ -64,7 +65,17 @@ for (let i=0; i<3; i++) {
   assert.match(publicMarkup,new RegExp(`id="sheet-${i}"`));
 }
 assert.ok(publicMarkup.includes(sandbox.window.MS_RELEASE.links.molbio));
-assert.ok(publicMarkup.includes(sandbox.window.MS_RELEASE.links.atlas));
+for (const [search, lang] of [['', 'ru'], ['?lang=en', 'en']]) {
+  const markup = renderPublic(search);
+  const url = sandbox.window.MS_RELEASE.links.atlas[lang];
+  assert.equal((markup.match(new RegExp(`href="${url}"`, 'g')) || []).length, 2, `${lang}: Atlas sheet and expanded action must use the correct URL`);
+  assert.ok(markup.includes(`<small>${url.replace('https://','')}</small>`), `${lang}: visible Atlas address must match the link`);
+  assert.ok(markup.includes(sandbox.window.MS_RELEASE.links.molbio), `${lang}: Molbio URL must remain unchanged`);
+  assert.ok(!markup.includes('fresll.github.io/pgt-mt-atlas/'), `${lang}: old Atlas URL remains`);
+}
+for (const file of files.filter(x=>/\.(?:html|js|css|xml|txt)$/.test(x))) {
+  assert.ok(!readFileSync(file,'utf8').includes('fresll.github.io/pgt-mt-atlas/'), `Old Atlas URL in ${file}`);
+}
 assert.ok(publicMarkup.includes('Modicum') && publicMarkup.includes('В разработке'));
 assert.doesNotMatch(publicMarkup,/href="#(?:education|research|technology|updates|about)"/);
 for (const file of files.filter(x=>x.endsWith('.js'))) {
