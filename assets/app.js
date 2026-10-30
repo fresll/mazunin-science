@@ -21,6 +21,7 @@
   const button = (key, text) => release?.links[key] ? `<a class="text-link resource-link" href="${release.links[key]}">${text}${arrow}</a><p class="resource-address">${release.links[key]}</p>` : `<button class="text-link" type="button" data-project="${key}">${text}${arrow}</button>`;
   const brand = `<a class="brand" href="#top" aria-label="MAZUNIN / SCIENCE"><span>MAZUNIN<span class="brand-slash"> /</span></span><span>SCIENCE<span class="brand-dot">.</span></span></a>`;
   const resourceKeys = ['molbio','atlas'];
+  const publicNavigation = () => t.nav.slice(0,3).map((label,i) => `<a href="#main" data-sheet-nav="${i}">${label}</a>`).join('');
   const sheetProject = i => {
     const url = release?.links[resourceKeys[i]];
     return url ? `<a class="sheet-resource" href="${url}" aria-label="${t.orientationMore[i]}: ${t.orientationProjects[i]}">${t.orientationProjects[i]} ${arrow}</a><small>${url.replace('https://','')}</small>` : `<span>${t.orientationProjects[i]}</span><small>${t.orientationMore[i]}</small>`;
@@ -91,19 +92,29 @@
     ${isPublic?'':`<div class="prototype-strip"><div class="shell"><span><b>${variant.toUpperCase()}</b> ${t.variants[variant]}</span>${variant==='c'?`<a class="studio-link" href="studio.html${location.search}">${lang==='ru'?'Галерея образов':'Illustration gallery'} ↗</a>`:''}<a href="../comparison.html">${t.compare}<span aria-hidden="true"> ↗</span></a></div></div>`}
     <header class="site-header shell" id="top">${brand}
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-navigation">${t.menu}<span aria-hidden="true">+</span></button>
-      <nav class="main-nav" id="main-navigation" aria-label="${lang==='ru'?'Основная навигация':'Main navigation'}">${t.nav.map((x,i)=>`<a href="#${ids[i]}">${x}</a>`).join('')}</nav>
+      <nav class="main-nav" id="main-navigation" aria-label="${lang==='ru'?'Основная навигация':'Main navigation'}">${isPublic ? publicNavigation() : t.nav.map((x,i)=>`<a href="#${ids[i]}">${x}</a>`).join('')}</nav>
       <a class="language-link mono" href="?lang=${lang==='ru'?'en':'ru'}" lang="${lang==='ru'?'en':'ru'}" aria-label="${lang==='ru'?'English — preliminary translation':'Русская версия'}"><span class="lang-current">${lang.toUpperCase()}</span> / ${lang==='ru'?'EN':'RU'}</a>
     </header>
     <main class="shell" id="main">
-      ${hero()}<div class="content-flow">${content}</div>
+      ${hero()}${isPublic ? '' : `<div class="content-flow">${content}</div>`}
     </main>
-    <footer class="site-footer shell"><div>${brand}<p>${t.footerNote}${t.preliminary?`<br>${t.preliminary}`:''}</p></div>${isPublic?'':`<nav class="variant-switch" aria-label="${t.switchVariant}"><span class="mono">${t.switchVariant}</span>${['a','b','c'].map(x=>`<a href="../prototype-${x}/index.html${lang==='en'?'?lang=en':''}" ${x===variant?'aria-current="page"':''}>${x.toUpperCase()}</a>`).join('')}</nav>`}<a class="back-top" href="#top">${t.backTop} ↑</a></footer>
+    ${isPublic ? '' : `<footer class="site-footer shell"><div>${brand}<p>${t.footerNote}${t.preliminary?`<br>${t.preliminary}`:''}</p></div><nav class="variant-switch" aria-label="${t.switchVariant}"><span class="mono">${t.switchVariant}</span>${['a','b','c'].map(x=>`<a href="../prototype-${x}/index.html${lang==='en'?'?lang=en':''}" ${x===variant?'aria-current="page"':''}>${x.toUpperCase()}</a>`).join('')}</nav><a class="back-top" href="#top">${t.backTop} ↑</a></footer>`}
     ${isPublic?'':`<dialog class="project-dialog" aria-labelledby="dialog-title"><button class="dialog-close" type="button" aria-label="${t.close}">×</button><div class="dialog-content"><h2 id="dialog-title">${t.prototype}</h2></div></dialog>`}`;
 
   const menu = document.querySelector('.menu-toggle'), nav = document.querySelector('.main-nav');
   const closeMenu = () => { menu.setAttribute('aria-expanded','false'); nav.classList.remove('is-open'); };
   menu.addEventListener('click',()=>{ const expanded = menu.getAttribute('aria-expanded')==='true'; menu.setAttribute('aria-expanded',String(!expanded)); nav.classList.toggle('is-open',!expanded); });
-  nav.addEventListener('click',e=>{if(e.target.closest('a'))closeMenu();});
+  nav.addEventListener('click',e=>{
+    const link = e.target.closest('a');
+    if (!link) return;
+    if (link.dataset.sheetNav) {
+      e.preventDefault();
+      const toggle = document.querySelector(`.folio-toggle[data-sheet="${link.dataset.sheetNav}"]`);
+      if (toggle && toggle.getAttribute('aria-expanded') !== 'true') toggle.click();
+      document.getElementById('main').scrollIntoView();
+    }
+    closeMenu();
+  });
   document.addEventListener('keydown',e=>{if(e.key==='Escape'){ if(nav.classList.contains('is-open')){closeMenu();menu.focus();} }});
 
   const deck = document.querySelector('.folio-deck');
@@ -125,7 +136,7 @@
   dialog?.querySelector('.dialog-close').addEventListener('click',()=>dialog.close());
   dialog?.addEventListener('click',e=>{if(e.target===dialog){const b=dialog.getBoundingClientRect();if(e.clientX<b.left||e.clientX>b.right||e.clientY<b.top||e.clientY>b.bottom)dialog.close();}});
   // Show the current section without changing focus or intercepting anchor navigation.
-  if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){nav.querySelectorAll('a').forEach(a=>a.toggleAttribute('data-current',a.hash===`#${entry.target.id}`));}}),{rootMargin:'-12% 0px -65% 0px'});ids.forEach(id=>observer.observe(document.getElementById(id)));}
+  if(!isPublic && 'IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){nav.querySelectorAll('a').forEach(a=>a.toggleAttribute('data-current',a.hash===`#${entry.target.id}`));}}),{rootMargin:'-12% 0px -65% 0px'});ids.forEach(id=>observer.observe(document.getElementById(id)));}
   // Hash targets exist after rendering, including when arriving through a deep link.
   if(location.hash){requestAnimationFrame(()=>{const target=document.getElementById(decodeURIComponent(location.hash.slice(1)));if(target)target.scrollIntoView();});}
   if (variant === 'c' && !isPublic) {
