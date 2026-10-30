@@ -1,0 +1,100 @@
+/* Chosen direction C: one Helvetica family, editorial vector studies and the approved pastel palette. */
+body[data-variant="c"] {
+  --sans: Helvetica, "Helvetica Neue", Arial, sans-serif;
+  --serif: var(--sans);
+  --mono: var(--sans);
+  --paper: #fbfcfa;
+  --ink: #24343b;
+  --muted: #53636a;
+  --blue: #315c89;
+  --line: #d2dcdd;
+  --sheet-0: #f1dfe1;
+  --sheet-1: #dce8f3;
+  --sheet-2: #e9ebd9;
+  --art-0: #79535d;
+  --art-1: #355d7d;
+  --art-2: #596139;
+  font-family: var(--sans);
+}
+.folio-hero { padding-bottom: 30px; border-bottom: 1px solid var(--ink); }
+.folio-heading { display: block; margin-bottom: 32px; }
+.folio-heading h1.eyebrow { font-family: var(--sans); font-size: clamp(20px,1.9vw,27px); font-weight: 400; letter-spacing: .015em; line-height: 1.3; margin: 0; }
+.folio-heading .eyebrow { font-size: 10px; max-width: none; font-weight: 400; letter-spacing: .06em; }
+.folio-intro { font-size: 14px; max-width: 680px; margin-top: 14px; }
+.folio-instruction { font-size: 10px; letter-spacing: .04em; justify-content: flex-end; }
+.folio-deck { min-height: 470px; }
+.folio-sheet { --sheet-offset: 0px; --muted: #53636a; color: var(--ink); border-color: #bac9cc; }
+.folio-sheet.sheet-0 { background: var(--sheet-0); border-top-color: var(--art-0); }
+.folio-sheet.sheet-1 { --sheet-offset: 24px; background: var(--sheet-1); border-color: #bac9cc; border-top: 5px solid var(--art-1); color: var(--ink); }
+.folio-sheet.sheet-2 { --sheet-offset: 46px; background: var(--sheet-2); border-top-color: var(--art-2); }
+.folio-sheet .sheet-spine { color: var(--muted); font-size: 8px; letter-spacing: .08em; }
+.folio-toggle { container-type: inline-size; display: grid; grid-template-columns: minmax(0,1fr); grid-template-rows: calc(330px - var(--sheet-offset)) 85px; align-content: start; align-items: start; min-height: calc(430px - var(--sheet-offset)); padding-top: 15px; }
+.sheet-illustration { display: block; width: min(420px,calc(100% + 90px)); height: 286px; max-width: none; align-self: center; justify-self: center; flex-shrink: 0; }
+.sheet-illustration svg { width: 100%; height: 100%; }
+.sheet-0 .sheet-illustration { color: var(--art-0); }
+.sheet-1 .sheet-illustration { color: var(--art-1); }
+.sheet-2 .sheet-illustration { color: var(--art-2); }
+.folio-sheet .sheet-name,
+.folio-deck:not([data-open="none"]) .sheet-name {
+  font-family: var(--sans); font-size: clamp(18px,min(2.55vw,10.5cqw),36px); font-weight: 400; line-height: 1.08; letter-spacing: -.025em; margin-top: 0; min-width: 0; max-width: 100%; overflow-wrap: anywhere; hyphens: auto;
+}
+.folio-sheet .sheet-action { top: 24px; font-size: 28px; color: var(--ink); }
+.folio-sheet .sheet-project { color: var(--ink); border-color: #82959b; font-size: 12px; font-family: var(--sans); }
+.folio-sheet .sheet-project small { color: var(--muted); font-size: 11px; }
+.folio-sheet .sheet-edge { border-color: #9eafb3; background: repeating-linear-gradient(to bottom,transparent 0,transparent 2px,#9eafb3 2px,#9eafb3 3px); opacity: .5; }
+.sheet-detail>a:hover,.sheet-1 .sheet-detail>a:hover { color: var(--blue); }
+.sheet-1 :focus-visible { outline-color: var(--blue); }
+.folio-note { font-size: 10px; }
+.studio-link { margin-left: auto; color: var(--blue); }
+.folio-toggle:hover .sheet-name { text-decoration-thickness: 1px; }
+.content-section .section-kicker { font-size: 10px; letter-spacing: .07em; }
+.project-copy h3,.discipline h3,.about-body>p,.section-heading h2,.dialog-content h2 { font-family: var(--sans); }
+.section-heading h2 { font-weight: 400; }
+.research-art { background: var(--sheet-1); color: var(--art-1); }
+.catalog-note { border-color: var(--line); }
+@media(min-width:801px) {
+  .folio-sheet .sheet-name { align-self: end; }
+  .folio-sheet .sheet-project { margin-top: 8px; }
+  .folio-deck:not([data-open="none"]) .folio-sheet .sheet-name { font-size: clamp(18px,min(2.1vw,10.5cqw),31px); }
+}
+@media(max-width:1100px) {
+  .folio-heading { gap: 35px; }
+  .folio-sheet { padding-left: 35px; padding-right: 20px; }
+  .folio-sheet .sheet-name { font-size: clamp(18px,10.5cqw,28px); }
+}
+@media(max-width:800px) {
+  .folio-heading { display: block; }
+  .folio-heading h1.eyebrow { font-size: 20px; max-width: 390px; }
+  .folio-instruction { font-size: 9px; align-items: flex-end; }
+  .folio-deck .folio-sheet { --sheet-offset: 0px; }
+  .folio-deck { min-height: 0; }
+  .folio-sheet { padding-left: 38px; padding-right: 23px; }
+  .folio-sheet.sheet-1 { border-top-width: 4px; }
+  .folio-toggle,.sheet-1 .folio-toggle { display: flex; min-height: 0; padding: 6px 18px 0 0; gap: 0; }
+  .sheet-illustration { height: 248px; max-width: none; }
+  .folio-sheet .sheet-name,.folio-deck:not([data-open="none"]) .sheet-name { font-size: clamp(20px,10.5cqw,28px); margin-top: 18px; }
+  .folio-sheet .sheet-action { top: 22px; right: -6px; }
+  .folio-sheet .sheet-project { margin-top: 25px; }
+  .sheet-spine { font-size: 7px!important; }
+  .prototype-strip>.shell { gap: 8px; flex-wrap: wrap; padding-block: 6px; }
+  .studio-link { font-size: 9px; }
+}
+@media(max-width:360px) {
+  .folio-sheet { padding-left: 30px; padding-right: 17px; }
+  .folio-sheet .sheet-name,.folio-deck:not([data-open="none"]) .sheet-name { font-size: clamp(20px,10.5cqw,25px); }
+  .sheet-illustration { height: 218px; }
+  .technology-body { grid-template-columns: minmax(0,1fr); }
+  .technology-art { min-width: 0; }
+  .technology-art .concept-diagram { gap: 8px; }
+}
+/* First public release: real resource links and honest development states. */
+.sheet-resource { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; text-decoration: underline; text-underline-offset: 4px; }
+.sheet-resource>span { font-size: 17px; }
+.folio-sheet .sheet-project small { overflow-wrap: anywhere; }
+.resource-address { font-size: 11px!important; line-height: 1.6; overflow-wrap: anywhere; margin: 10px 0 0; color: var(--muted); }
+.project-status.is-available i { background: #386257; }
+.technology-body.is-development { grid-template-columns: minmax(0,1fr); }
+.development-placeholder { align-self: center; padding-block: 12px; }
+.development-placeholder .project-status { margin: 0 0 12px; font-size: 12px; }
+.development-placeholder>p:last-child { color: var(--muted); font-size: 13px; line-height: 1.7; }
+.no-script-content { padding-block: 60px; line-height: 1.8; }

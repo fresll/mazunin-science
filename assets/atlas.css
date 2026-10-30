@@ -1,0 +1,506 @@
+/* C — the atlas plate: a typographic overview followed by a blue scientific folio. */
+
+body[data-variant=c] {
+  --paper:#fafbf9;
+  --ink:#182b35;
+  --muted:#5f7078;
+  --blue:#174eaa;
+  --blue-pale:#eaf0f6;
+  --line:#d3dce0;
+}
+
+.site-header {
+  min-height:106px;
+}
+
+.brand {
+  font-size:20px;
+}
+
+.content-section {
+  padding:65px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.section-heading {
+  display:grid;
+  grid-template-columns:1fr 2fr;
+  gap:30px;
+  margin-bottom:35px;
+}
+
+.section-heading .section-kicker {
+  padding-top:9px;
+  font-size:9px;
+}
+
+.section-heading>div {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:35px;
+}
+
+.section-heading h2 {
+  font-family:var(--serif);
+  font-size:43px;
+  line-height:1.13;
+  letter-spacing:-.05em;
+}
+
+.section-intro {
+  font-size:13px;
+  margin:5px 0 0;
+}
+
+.education-body {
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:35px;
+}
+
+.discipline {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  column-gap:25px;
+  padding:30px 30px 18px;
+  background:#fff;
+  border-top:3px solid var(--blue);
+  border-bottom:1px solid var(--line);
+}
+
+.discipline h3 {
+  font-family:var(--serif);
+  font-size:39px;
+  margin:18px 0;
+}
+
+.discipline-copy>.eyebrow {
+  color:var(--blue);
+  font-size:9px;
+}
+
+.discipline-copy>p:not(.eyebrow) {
+  font-size:12px;
+}
+
+.discipline-figure {
+  align-self:center;
+}
+
+.discipline-figure>.mono {
+  font-size:8px;
+}
+
+.discipline-foot {
+  grid-column:1/-1;
+  border-top:1px solid var(--line);
+  padding-top:15px;
+  margin-top:25px;
+  font-size:8px;
+}
+
+.catalog-note {
+  align-self:stretch;
+  align-items:flex-start;
+  gap:20px;
+  padding:34px 15px 20px 25px;
+  border-top:1px solid var(--line);
+  border-left:1px solid var(--line);
+}
+
+.catalog-note>span {
+  font-size:36px;
+  line-height:1;
+}
+
+.catalog-note strong {
+  font-family:var(--serif);
+  font-size:23px;
+}
+
+.catalog-note p {
+  font-size:12px;
+  max-width:240px;
+  margin-top:16px;
+}
+
+.research-body {
+  display:grid;
+  grid-template-columns:1.4fr 1fr;
+  gap:0;
+  border:1px solid var(--line);
+  background:#fff;
+}
+
+.research-art {
+  color:var(--blue);
+  padding:30px 55px 25px;
+  background:#edf2f5;
+  border-right:1px solid var(--line);
+}
+
+.research-art>.mono {
+  font-size:8px;
+}
+
+.research-body .project-copy {
+  align-self:center;
+  padding:36px 45px;
+}
+
+.project-copy .eyebrow {
+  font-size:9px;
+  color:var(--blue);
+}
+
+.project-copy h3 {
+  font-family:var(--serif);
+  font-size:48px;
+  letter-spacing:-.045em;
+}
+
+.project-copy>p:not(.eyebrow) {
+  font-size:13px;
+}
+
+.technology-body {
+  display:grid;
+  grid-template-columns:1fr 1.4fr;
+  gap:0;
+  border-top:1px solid var(--ink);
+  border-bottom:1px solid var(--line);
+}
+
+.technology-body .project-copy {
+  padding:35px 45px 35px 0;
+}
+
+.technology-art {
+  align-content:center;
+  border-left:1px solid var(--line);
+  margin:25px 0;
+  padding:0 35px;
+}
+
+.technology-art .concept-diagram {
+  gap:30px;
+}
+
+.updates {
+  display:grid;
+  grid-template-columns:1fr 2fr;
+  gap:30px;
+}
+
+.updates .section-heading {
+  display:block;
+  margin:0;
+}
+
+.updates .section-heading .section-kicker {
+  margin-bottom:25px;
+  padding-top:0;
+}
+
+.updates .section-heading>div {
+  display:block;
+}
+
+.updates .section-intro {
+  margin-top:17px;
+  max-width:300px;
+}
+
+.update-item summary {
+  grid-template-columns:90px 1fr 20px;
+  padding-block:28px;
+  gap:20px;
+}
+
+.update-type {
+  display:none;
+}
+
+.update-item h3 {
+  font-size:17px;
+}
+
+.update-item>p {
+  margin-left:110px;
+}
+
+.about {
+  border-bottom:0;
+  display:grid;
+  grid-template-columns:1fr 2fr;
+  gap:30px;
+  padding-bottom:75px;
+}
+
+.about .section-heading {
+  display:block;
+  margin:0;
+}
+
+.about .section-heading>div {
+  display:block;
+}
+
+.about .section-kicker {
+  padding:0;
+  margin-bottom:25px;
+}
+
+.about .section-heading h2 {
+  font-size:40px;
+}
+
+.about-body>p {
+  font-family:var(--serif);
+  font-size:24px;
+  line-height:1.5;
+}
+
+.author-note {
+  flex-direction:row;
+  justify-content:space-between;
+  font-size:10px;
+  gap:25px;
+}
+
+.site-footer {
+  border-top:2px solid var(--blue);
+}
+
+.site-footer .brand {
+  font-size:17px;
+}
+
+@media(max-width:1100px) {
+  .section-heading {
+    grid-template-columns:.75fr 2fr;
+  }
+
+  .section-heading>div {
+    gap:25px;
+  }
+
+  .section-heading h2 {
+    font-size:36px;
+  }
+
+  .education-body {
+    gap:25px;
+  }
+
+  .discipline {
+    padding:25px 22px 17px;
+    column-gap:15px;
+  }
+
+  .discipline h3 {
+    font-size:34px;
+  }
+
+  .research-art {
+    padding:30px;
+  }
+
+  .research-body .project-copy {
+    padding:30px;
+  }
+
+  .technology-art {
+    padding-inline:20px;
+  }
+
+  .technology-art .concept-diagram {
+    gap:20px;
+  }
+
+  .project-copy h3 {
+    font-size:42px;
+  }
+}
+
+@media(max-width:800px) {
+  .site-header {
+    min-height:84px;
+  }
+
+  .content-section {
+    padding:42px 0;
+  }
+
+  .section-heading {
+    display:block;
+    margin-bottom:25px;
+  }
+
+  .section-heading .section-kicker {
+    padding:0;
+    margin-bottom:20px;
+    font-size:9px;
+  }
+
+  .section-heading>div {
+    display:block;
+  }
+
+  .section-heading h2 {
+    font-size:36px;
+  }
+
+  .section-intro {
+    margin-top:16px;
+    font-size:13px;
+  }
+
+  .education-body {
+    display:block;
+  }
+
+  .discipline {
+    grid-template-columns:1fr;
+    padding:26px 23px 18px;
+    gap:24px;
+  }
+
+  .discipline h3 {
+    font-size:40px;
+  }
+
+  .discipline-copy>p:not(.eyebrow) {
+    font-size:13px;
+  }
+
+  .discipline-figure {
+    max-width:480px;
+    width:100%;
+    margin:auto;
+  }
+
+  .discipline-foot {
+    margin-top:0;
+  }
+
+  .catalog-note {
+    margin-top:22px;
+    border-left:0;
+    padding:22px 0 0;
+    gap:20px;
+  }
+
+  .catalog-note strong {
+    font-size:22px;
+  }
+
+  .catalog-note p {
+    max-width:350px;
+    font-size:11px;
+    margin-top:8px;
+  }
+
+  .research-body {
+    grid-template-columns:1fr;
+  }
+
+  .research-art {
+    border-right:0;
+    border-bottom:1px solid var(--line);
+    padding:20px 10px 25px;
+  }
+
+  .research-body .project-copy {
+    padding:30px 24px 35px;
+  }
+
+  .project-copy h3 {
+    font-size:43px;
+  }
+
+  .technology-body {
+    grid-template-columns:1fr;
+  }
+
+  .technology-body .project-copy {
+    padding:25px 0;
+  }
+
+  .technology-art {
+    margin:0 0 23px;
+    padding:0 10px;
+    border-left:0;
+    border-top:1px solid var(--line);
+  }
+
+  .technology-art .concept-diagram {
+    gap:20px;
+  }
+
+  .updates {
+    display:block;
+  }
+
+  .updates .section-heading {
+    margin-bottom:25px;
+  }
+
+  .updates .section-heading h2 br {
+    display:none;
+  }
+
+  .updates .section-intro {
+    max-width:400px;
+  }
+
+  .update-item summary {
+    grid-template-columns:83px 1fr 18px;
+    gap:12px;
+    padding-block:23px;
+  }
+
+  .update-item h3 {
+    font-size:14px;
+  }
+
+  .update-item time {
+    font-size:9px;
+  }
+
+  .update-item>p {
+    margin-left:0;
+  }
+
+  .about {
+    display:block;
+    padding-bottom:45px;
+  }
+
+  .about .section-heading {
+    margin-bottom:25px;
+  }
+
+  .about .section-kicker {
+    margin-bottom:20px;
+  }
+
+  .about .section-heading h2 {
+    font-size:36px;
+  }
+
+  .about-body>p {
+    font-size:22px;
+  }
+
+  .author-note {
+    flex-direction:column;
+    gap:10px;
+  }
+
+  .site-footer {
+    padding-top:30px;
+  }
+}
+
+/* The atlas opens with a full-width title and a separate scientific plate. */
