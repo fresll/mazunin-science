@@ -31,8 +31,44 @@ const sandbox={window:{}};
 runInNewContext(readFileSync(resolve(output,'assets/release-content.js'),'utf8'),sandbox);
 assert.equal(sandbox.window.MS_RELEASE.links.molbio,'https://fresll.github.io/molbio/');
 assert.equal(sandbox.window.MS_RELEASE.links.atlas,'https://fresll.github.io/pgt-mt-atlas/ru/');
+
+// Execute the shipped scripts with a minimal document and inspect what the app
+// inserts into #app. This checks generated markup, not merely its source code.
+function renderPublic(search) {
+  const app = { innerHTML: '' };
+  const element = {
+    addEventListener() {}, querySelectorAll() { return []; },
+    classList: { add() {}, remove() {}, contains() { return false; } },
+    setAttribute() {}, getAttribute() { return 'false'; }
+  };
+  const document = {
+    body: { dataset: { variant:'c', site:'public' }, style: { setProperty() {} } },
+    documentElement: {},
+    getElementById(id) { return id === 'app' ? app : null; },
+    querySelector(selector) { return selector === '.project-dialog' ? null : element; },
+    querySelectorAll() { return []; }, addEventListener() {}
+  };
+  const context = { window: {}, document, location: { search, hash:'' }, URLSearchParams };
+  for (const name of ['content.js','graphics.js','folio-art.js','release-content.js','app.js']) {
+    runInNewContext(readFileSync(resolve(output,'assets',name),'utf8'),context,{filename:name});
+  }
+  return app.innerHTML;
+}
+const publicMarkup = renderPublic('');
+assert.equal(renderPublic('?utm_source=chatgpt.com'),publicMarkup,'Tracking parameters must not alter the public page');
+assert.doesNotMatch(publicMarkup,/\b(?:content-flow|content-section|site-footer)\b/,'Public DOM must not contain legacy sections or footer');
+assert.doesNotMatch(publicMarkup,/\bid="(?:education|research|technology|updates|about)"/,'Public DOM must not contain duplicate content sections');
+assert.equal((publicMarkup.match(/<article class="folio-sheet\b/g)||[]).length,3,'Public DOM must contain exactly three sheets');
+for (let i=0; i<3; i++) {
+  assert.match(publicMarkup,new RegExp(`href="#sheet-${i}" data-sheet-nav="${i}"`));
+  assert.match(publicMarkup,new RegExp(`id="sheet-${i}"`));
+}
+assert.ok(publicMarkup.includes(sandbox.window.MS_RELEASE.links.molbio));
+assert.ok(publicMarkup.includes(sandbox.window.MS_RELEASE.links.atlas));
+assert.ok(publicMarkup.includes('Modicum') && publicMarkup.includes('В разработке'));
+assert.doesNotMatch(publicMarkup,/href="#(?:education|research|technology|updates|about)"/);
 for (const file of files.filter(x=>x.endsWith('.js'))) {
   const result=spawnSync(process.execPath,['--check',file],{encoding:'utf8'});
   assert.equal(result.status,0,result.stderr);
 }
-console.log(`OK — ${actual.length} publication files; resource URLs, root paths, canonical, domain and JS checked. Draft pages excluded.`);
+console.log(`OK — ${actual.length} publication files; generated public markup, UTM, resource URLs, root paths, canonical, domain and JS checked. Draft pages excluded.`);

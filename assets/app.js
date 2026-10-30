@@ -27,7 +27,7 @@
   };
   const sheetAction = (id,i) => {
     const url = release?.links[resourceKeys[i]];
-    return url ? `<a href="${url}">${t.orientationMore[i]} ${arrow}</a>` : `<a href="#${id}">${lang==='ru'?'Перейти в раздел':'Go to section'} ${arrow}</a>`;
+    return url ? `<a href="${url}">${t.orientationMore[i]} ${arrow}</a>` : isPublic ? '' : `<a href="#${id}">${lang==='ru'?'Перейти в раздел':'Go to section'} ${arrow}</a>`;
   };
   const development = `<div class="development-placeholder section-body"><p class="project-status">${t.pending}</p><p>${t.developmentText || ''}</p></div>`;
   const nodeText = i => `<span class="direction-name">${t.orientationNames[i]}</span><span class="direction-description">${t.pathDescriptions[i]}</span><span class="direction-project">${t.orientationProjects[i]}<small>${t.orientationMore[i]}</small></span>`;
@@ -50,11 +50,11 @@
     return `<section class="hero folio-hero" aria-label="${t.eyebrow}">
       <div class="folio-heading"><h1 class="eyebrow">${t.eyebrow}</h1><p class="folio-intro">${t.platformSummary}</p></div>
       <div class="folio-instruction mono"><span>${lang==='ru'?'Нажмите на лист, чтобы развернуть':'Select a sheet to unfold'}</span></div>
-      <div class="folio-deck" data-open="none">${ids.slice(0,3).map((id,i)=>`<article class="folio-sheet sheet-${i}"><span class="sheet-spine mono" aria-hidden="true">MAZUNIN / ${['EDUCATION','RESEARCH','TECHNOLOGY'][i]}</span><button class="folio-toggle" type="button" data-sheet="${i}" aria-expanded="false" aria-controls="sheet-detail-${i}"><span class="sheet-illustration">${window.MS_FOLIO.drawing(i,folioOptions.art[i].id)}</span><span class="sheet-name">${t.orientationNames[i]}</span><span class="sheet-action" aria-hidden="true">+</span></button><div class="sheet-project">${sheetProject(i)}</div><div class="sheet-detail" id="sheet-detail-${i}" hidden><p>${t.pathDescriptions[i]}</p>${sheetAction(id,i)}</div><span class="sheet-edge" aria-hidden="true"></span></article>`).join('')}</div>
+      <div class="folio-deck" data-open="none">${ids.slice(0,3).map((id,i)=>`<article class="folio-sheet sheet-${i}"${isPublic?` id="sheet-${i}"`:''}><span class="sheet-spine mono" aria-hidden="true">MAZUNIN / ${['EDUCATION','RESEARCH','TECHNOLOGY'][i]}</span><button class="folio-toggle" type="button" data-sheet="${i}" aria-expanded="false" aria-controls="sheet-detail-${i}"><span class="sheet-illustration">${window.MS_FOLIO.drawing(i,folioOptions.art[i].id)}</span><span class="sheet-name">${t.orientationNames[i]}</span><span class="sheet-action" aria-hidden="true">+</span></button><div class="sheet-project">${sheetProject(i)}</div><div class="sheet-detail" id="sheet-detail-${i}" hidden><p>${t.pathDescriptions[i]}</p>${sheetAction(id,i)}</div><span class="sheet-edge" aria-hidden="true"></span></article>`).join('')}</div>
     </section>`;
   }
   const sectionHead = (id,kicker,title,text) => `<header class="section-heading"><p class="section-kicker mono">${variant==='c'?kicker.replace(/^\d+\s*\/\s*/, ''):kicker}</p><div><h2 id="${id}-heading">${lines(title)}</h2>${text?`<p class="section-intro">${text}</p>`:''}</div></header>`;
-  const content = `
+  const content = () => `
     <section class="content-section education" id="education" aria-labelledby="education-heading">
       ${sectionHead('education',t.eduKicker,t.eduTitle,t.eduIntro)}
       <div class="education-body section-body">
@@ -91,19 +91,32 @@
     ${isPublic?'':`<div class="prototype-strip"><div class="shell"><span><b>${variant.toUpperCase()}</b> ${t.variants[variant]}</span>${variant==='c'?`<a class="studio-link" href="studio.html${location.search}">${lang==='ru'?'Галерея образов':'Illustration gallery'} ↗</a>`:''}<a href="../comparison.html">${t.compare}<span aria-hidden="true"> ↗</span></a></div></div>`}
     <header class="site-header shell" id="top">${brand}
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-navigation">${t.menu}<span aria-hidden="true">+</span></button>
-      <nav class="main-nav" id="main-navigation" aria-label="${lang==='ru'?'Основная навигация':'Main navigation'}">${t.nav.map((x,i)=>`<a href="#${ids[i]}">${x}</a>`).join('')}</nav>
+      <nav class="main-nav" id="main-navigation" aria-label="${lang==='ru'?'Основная навигация':'Main navigation'}">${isPublic?t.nav.slice(0,3).map((x,i)=>`<a href="#sheet-${i}" data-sheet-nav="${i}">${x}</a>`).join(''):t.nav.map((x,i)=>`<a href="#${ids[i]}">${x}</a>`).join('')}</nav>
       <a class="language-link mono" href="?lang=${lang==='ru'?'en':'ru'}" lang="${lang==='ru'?'en':'ru'}" aria-label="${lang==='ru'?'English — preliminary translation':'Русская версия'}"><span class="lang-current">${lang.toUpperCase()}</span> / ${lang==='ru'?'EN':'RU'}</a>
     </header>
     <main class="shell" id="main">
-      ${hero()}<div class="content-flow">${content}</div>
+      ${hero()}${isPublic?'':`<div class="content-flow">${content()}</div>`}
     </main>
-    <footer class="site-footer shell"><div>${brand}<p>${t.footerNote}${t.preliminary?`<br>${t.preliminary}`:''}</p></div>${isPublic?'':`<nav class="variant-switch" aria-label="${t.switchVariant}"><span class="mono">${t.switchVariant}</span>${['a','b','c'].map(x=>`<a href="../prototype-${x}/index.html${lang==='en'?'?lang=en':''}" ${x===variant?'aria-current="page"':''}>${x.toUpperCase()}</a>`).join('')}</nav>`}<a class="back-top" href="#top">${t.backTop} ↑</a></footer>
+    ${isPublic?'':`<footer class="site-footer shell"><div>${brand}<p>${t.footerNote}${t.preliminary?`<br>${t.preliminary}`:''}</p></div><nav class="variant-switch" aria-label="${t.switchVariant}"><span class="mono">${t.switchVariant}</span>${['a','b','c'].map(x=>`<a href="../prototype-${x}/index.html${lang==='en'?'?lang=en':''}" ${x===variant?'aria-current="page"':''}>${x.toUpperCase()}</a>`).join('')}</nav><a class="back-top" href="#top">${t.backTop} ↑</a></footer>`}
     ${isPublic?'':`<dialog class="project-dialog" aria-labelledby="dialog-title"><button class="dialog-close" type="button" aria-label="${t.close}">×</button><div class="dialog-content"><h2 id="dialog-title">${t.prototype}</h2></div></dialog>`}`;
 
   const menu = document.querySelector('.menu-toggle'), nav = document.querySelector('.main-nav');
   const closeMenu = () => { menu.setAttribute('aria-expanded','false'); nav.classList.remove('is-open'); };
   menu.addEventListener('click',()=>{ const expanded = menu.getAttribute('aria-expanded')==='true'; menu.setAttribute('aria-expanded',String(!expanded)); nav.classList.toggle('is-open',!expanded); });
-  nav.addEventListener('click',e=>{if(e.target.closest('a'))closeMenu();});
+  nav.addEventListener('click',e=>{
+    const link = e.target.closest('a');
+    if (!link) return;
+    if (isPublic && link.dataset.sheetNav !== undefined) {
+      e.preventDefault();
+      const sheet = document.getElementById(`sheet-${link.dataset.sheetNav}`);
+      const toggle = sheet?.querySelector('.folio-toggle');
+      if (toggle && toggle.getAttribute('aria-expanded') !== 'true') toggle.click();
+      closeMenu();
+      sheet?.scrollIntoView({block:'start'});
+      return;
+    }
+    closeMenu();
+  });
   document.addEventListener('keydown',e=>{if(e.key==='Escape'){ if(nav.classList.contains('is-open')){closeMenu();menu.focus();} }});
 
   const deck = document.querySelector('.folio-deck');
@@ -125,7 +138,7 @@
   dialog?.querySelector('.dialog-close').addEventListener('click',()=>dialog.close());
   dialog?.addEventListener('click',e=>{if(e.target===dialog){const b=dialog.getBoundingClientRect();if(e.clientX<b.left||e.clientX>b.right||e.clientY<b.top||e.clientY>b.bottom)dialog.close();}});
   // Show the current section without changing focus or intercepting anchor navigation.
-  if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){nav.querySelectorAll('a').forEach(a=>a.toggleAttribute('data-current',a.hash===`#${entry.target.id}`));}}),{rootMargin:'-12% 0px -65% 0px'});ids.forEach(id=>observer.observe(document.getElementById(id)));}
+  if(!isPublic && 'IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){nav.querySelectorAll('a').forEach(a=>a.toggleAttribute('data-current',a.hash===`#${entry.target.id}`));}}),{rootMargin:'-12% 0px -65% 0px'});ids.forEach(id=>observer.observe(document.getElementById(id)));}
   // Hash targets exist after rendering, including when arriving through a deep link.
   if(location.hash){requestAnimationFrame(()=>{const target=document.getElementById(decodeURIComponent(location.hash.slice(1)));if(target)target.scrollIntoView();});}
   if (variant === 'c' && !isPublic) {
