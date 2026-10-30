@@ -57,19 +57,6 @@ body[data-variant="c"] {
   .folio-sheet .sheet-project { margin-top: 8px; }
   .folio-deck:not([data-open="none"]) .folio-sheet .sheet-name { font-size: clamp(18px,min(2.1vw,10.5cqw),31px); }
 }
-/* The public homepage is a single desktop viewport, with a compact treatment on short screens. */
-@media (min-width:801px) and (max-height:850px) {
-  body[data-site="public"] .folio-hero { padding-top:22px; padding-bottom:18px; }
-  body[data-site="public"] .folio-heading { margin-bottom:20px; }
-  body[data-site="public"] .folio-intro { margin-top:8px; }
-  body[data-site="public"] .folio-instruction { padding-bottom:8px; }
-  body[data-site="public"] .folio-deck { min-height:390px; padding-top:12px; }
-  body[data-site="public"] .folio-sheet { padding-bottom:18px; }
-  body[data-site="public"] .folio-toggle { grid-template-rows:calc(255px - var(--sheet-offset)) 70px; min-height:calc(335px - var(--sheet-offset)); padding-top:8px; }
-  body[data-site="public"] .sheet-illustration { height:220px; }
-  body[data-site="public"] .folio-sheet .sheet-name { font-size:clamp(18px,min(2.25vw,10.5cqw),28px); }
-  body[data-site="public"] .folio-sheet .sheet-project { margin-top:4px; padding-top:10px; }
-}
 @media(max-width:1100px) {
   .folio-heading { gap: 35px; }
   .folio-sheet { padding-left: 35px; padding-right: 20px; }
@@ -111,3 +98,60 @@ body[data-variant="c"] {
 .development-placeholder .project-status { margin: 0 0 12px; font-size: 12px; }
 .development-placeholder>p:last-child { color: var(--muted); font-size: 13px; line-height: 1.7; }
 .no-script-content { padding-block: 60px; line-height: 1.8; }
+
+/* Public cover: let the three sheets use the available viewport while their
+   content remains free to grow when a sheet is opened or the screen is short. */
+@media (min-width: 801px) {
+  body[data-site="public"] .shell {
+    width: calc(100% - 2 * clamp(32px, 3vw, 80px));
+  }
+  body[data-site="public"] .folio-hero {
+    min-height: calc(100vh - 108px);
+    min-height: calc(100dvh - 108px);
+    display: flex;
+    flex-direction: column;
+  }
+  body[data-site="public"] .folio-heading {
+    margin-bottom: clamp(22px, 2.5vh, 36px);
+  }
+  body[data-site="public"] .folio-deck {
+    flex: 1 0 auto;
+    grid-template-rows: minmax(470px, 1fr);
+  }
+  body[data-site="public"] .folio-sheet {
+    display: flex;
+    flex-direction: column;
+    padding-left: clamp(38px, 3.2vw, 70px);
+    padding-right: clamp(24px, 2.2vw, 48px);
+    padding-bottom: clamp(27px, 2.5vh, 40px);
+  }
+  body[data-site="public"] .folio-toggle {
+    flex: 1 0 auto;
+    grid-template-rows: minmax(220px, 1fr) auto;
+    min-height: calc(360px - var(--sheet-offset));
+    row-gap: clamp(12px, 2vh, 24px);
+  }
+  body[data-site="public"] .sheet-illustration {
+    width: min(100%, 65vh, 720px);
+    width: min(100%, 65dvh, 720px);
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+  body[data-site="public"] .sheet-illustration svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  body[data-site="public"] .folio-sheet .sheet-name,
+  body[data-site="public"] .folio-deck:not([data-open="none"]) .sheet-name {
+    font-size: clamp(20px, min(2.4vw, 8cqw), 48px);
+  }
+  body[data-site="public"] .folio-sheet .sheet-project {
+    font-size: clamp(12px, 0.8vw, 16px);
+    padding-top: clamp(12px, 1.5vh, 20px);
+    margin-top: clamp(12px, 1.5vh, 20px);
+  }
+  body[data-site="public"] .folio-sheet .sheet-project small {
+    font-size: clamp(11px, 0.7vw, 14px);
+  }
+}
