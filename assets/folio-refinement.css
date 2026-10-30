@@ -99,6 +99,8 @@ body[data-variant="c"] {
 .development-placeholder>p:last-child { color: var(--muted); font-size: 13px; line-height: 1.7; }
 .no-script-content { padding-block: 60px; line-height: 1.8; }
 
+.sheet-count:not([hidden]) { display: inline-flex; align-items: center; gap: 5px; margin-top: 4px; color: var(--muted); font-size: 10px; line-height: 1.4; }
+.sheet-count svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.5; }
 /* Public cover: let the three sheets use the available viewport while their
    content remains free to grow when a sheet is opened or the screen is short. */
 @media (min-width: 801px) {

@@ -51,7 +51,7 @@
     return `<section class="hero folio-hero" aria-label="${t.eyebrow}">
       <div class="folio-heading"><h1 class="eyebrow">${t.eyebrow}</h1><p class="folio-intro">${t.platformSummary}</p></div>
       <div class="folio-instruction mono"><span>${lang==='ru'?'Нажмите на лист, чтобы развернуть':'Select a sheet to unfold'}</span></div>
-      <div class="folio-deck" data-open="none">${ids.slice(0,3).map((id,i)=>`<article class="folio-sheet sheet-${i}"${isPublic?` id="sheet-${i}"`:''}><span class="sheet-spine mono" aria-hidden="true">MAZUNIN / ${['EDUCATION','RESEARCH','TECHNOLOGY'][i]}</span><button class="folio-toggle" type="button" data-sheet="${i}" aria-expanded="false" aria-controls="sheet-detail-${i}"><span class="sheet-illustration">${window.MS_FOLIO.drawing(i,folioOptions.art[i].id)}</span><span class="sheet-name">${t.orientationNames[i]}</span><span class="sheet-action" aria-hidden="true">+</span></button><div class="sheet-project">${sheetProject(i)}</div><div class="sheet-detail" id="sheet-detail-${i}" hidden><p>${t.pathDescriptions[i]}</p>${sheetAction(id,i)}</div><span class="sheet-edge" aria-hidden="true"></span></article>`).join('')}</div>
+      <div class="folio-deck" data-open="none">${ids.slice(0,3).map((id,i)=>`<article class="folio-sheet sheet-${i}"${isPublic?` id="sheet-${i}"`:''}><span class="sheet-spine mono" aria-hidden="true">MAZUNIN / ${['EDUCATION','RESEARCH','TECHNOLOGY'][i]}</span><button class="folio-toggle" type="button" data-sheet="${i}" aria-expanded="false" aria-controls="sheet-detail-${i}"><span class="sheet-illustration">${window.MS_FOLIO.drawing(i,folioOptions.art[i].id)}</span><span class="sheet-name">${t.orientationNames[i]}</span><span class="sheet-action" aria-hidden="true">+</span></button><div class="sheet-project">${sheetProject(i)}</div><div class="sheet-detail" id="sheet-detail-${i}" hidden><p>${t.pathDescriptions[i]}</p>${sheetAction(id,i)}${isPublic ? `<span class="sheet-count mono" data-sheet-count="${i}" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="2.5"/></svg><span>${lang==='ru'?'Открытий':'Opens'}</span> <span data-count-value></span></span>` : ''}</div><span class="sheet-edge" aria-hidden="true"></span></article>`).join('')}</div>
     </section>`;
   }
   const sectionHead = (id,kicker,title,text) => `<header class="section-heading"><p class="section-kicker mono">${variant==='c'?kicker.replace(/^\d+\s*\/\s*/, ''):kicker}</p><div><h2 id="${id}-heading">${lines(title)}</h2>${text?`<p class="section-intro">${text}</p>`:''}</div></header>`;
@@ -124,12 +124,24 @@
   if (deck) deck.querySelectorAll('.folio-toggle').forEach(toggle => toggle.addEventListener('click', () => {
     const next = toggle.getAttribute('aria-expanded') === 'true' ? 'none' : toggle.dataset.sheet;
     deck.dataset.open = next;
+    if (isPublic && next !== 'none') window.MS_ANALYTICS?.event(['sheet-education', 'sheet-research', 'sheet-technology'][Number(next)]);
     deck.querySelectorAll('.folio-toggle').forEach(button => {
       const open = button.dataset.sheet === next;
       button.setAttribute('aria-expanded', String(open));
       document.getElementById(button.getAttribute('aria-controls')).hidden = !open;
     });
   }));
+  if (isPublic) {
+    window.MS_ANALYTICS?.showCounts();
+    document.querySelector('.language-link').addEventListener('click', e => {
+      if (e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey) window.MS_ANALYTICS?.languageSwitch(e.currentTarget.href);
+    });
+    document.addEventListener('click', e => {
+      const link = e.target.closest('a[href]');
+      const key = resourceKeys.find(k => link?.href === resourceUrl(k));
+      if (key) window.MS_ANALYTICS?.event(`outbound-${key}`);
+    });
+  }
   const dialog = document.querySelector('.project-dialog');
   document.querySelectorAll('[data-project]').forEach(el=>el.addEventListener('click',()=>{
     const p=t.dialogs[el.dataset.project];

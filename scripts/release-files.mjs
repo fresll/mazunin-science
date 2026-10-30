@@ -4,5 +4,5 @@ export const siteFiles = [
   'assets/favicon.svg', 'assets/base.css', 'assets/atlas.css',
   'assets/frontpage.css', 'assets/folio-refinement.css',
   'assets/content.js', 'assets/graphics.js', 'assets/folio-art.js',
-  'assets/release-content.js', 'assets/app.js'
+  'assets/release-content.js', 'assets/analytics-config.js', 'assets/analytics.js', 'assets/app.js'
 ];

@@ -1,8 +1,8 @@
 name: Publish MAZUNIN SCIENCE
 
-# Uploading/pushing the repository does NOT publish the site.
-# Run this workflow manually only after the owner approves publication.
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -11,8 +11,8 @@ permissions:
   id-token: write
 
 concurrency:
-  group: github-pages
-  cancel-in-progress: false
+  group: github-pages-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   publish:
@@ -34,6 +34,13 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
+      - name: Verify this is still the main branch tip
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EXPECTED_SHA: ${{ github.sha }}
+        run: |
+          current_sha=$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/heads/main" --jq .object.sha)
+          test "$current_sha" = "$EXPECTED_SHA" || { echo "Main has advanced; skipping stale deployment."; exit 1; }
       - name: Publish
         id: deployment
         uses: actions/deploy-pages@v5
