@@ -35,5 +35,5 @@ ${drawing(2, 'workshop', 734, 160, '#596139')}
 </svg>`;
 const svgPath = resolve(root, 'assets/og/mazunin-science-preview.svg');
 writeFileSync(svgPath, svg);
-const render = spawnSync('python3', [resolve(root, 'scripts/render-og.py'), svgPath, resolve(root, 'assets/og/mazunin-science-preview.png')], { stdio: 'inherit' });
+const render = spawnSync('python3', [resolve(root, 'scripts/render-og.py'), svgPath, resolve(root, 'assets/og/mazunin-science-preview-v2.png')], { stdio: 'inherit' });
 if (render.status !== 0) process.exit(render.status || 1);
