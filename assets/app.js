@@ -25,9 +25,11 @@
   const courseLabel = lang === 'ru' ? 'Молекулярная биология' : 'Molecular biology';
   const sheetProject = i => {
     const url = resourceUrl(resourceKeys[i]);
-    return url ? `<a class="sheet-resource" href="${url}" aria-label="${t.orientationMore[i]}: ${t.orientationProjects[i]}">${t.orientationProjects[i]} ${arrow}</a><small>${url.replace('https://','')}</small>` : `<span>${t.orientationProjects[i]}</span><small>${t.orientationMore[i]}</small>`;
+    const label = isPublic && i === 0 ? t.orientationProjects[i] : `${t.orientationMore[i]}: ${t.orientationProjects[i]}`;
+    return url ? `<a class="sheet-resource" href="${url}" aria-label="${label}">${t.orientationProjects[i]} ${arrow}</a><small>${url.replace('https://','')}</small>` : `<span>${t.orientationProjects[i]}</span><small>${t.orientationMore[i]}</small>`;
   };
   const sheetAction = (id,i) => {
+    if (isPublic && i === 0) return '';
     const url = resourceUrl(resourceKeys[i]);
     return url ? `<a href="${url}">${t.orientationMore[i]} ${arrow}</a>` : isPublic ? '' : `<a href="#${id}">${lang==='ru'?'Перейти в раздел':'Go to section'} ${arrow}</a>`;
   };

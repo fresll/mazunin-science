@@ -70,6 +70,8 @@ assert.ok(!publicMarkup.includes('https://edu.mazunin.science/bio/'));
 assert.ok(publicMarkup.includes(sandbox.window.MS_RELEASE.links.molbio));
 for (const [search, lang] of [['', 'ru'], ['?lang=en', 'en']]) {
   const markup = renderPublic(search);
+  const mapLink = `href="${sandbox.window.MS_RELEASE.links.educationMap}"`;
+  assert.equal(markup.split(mapLink).length - 1, 1, `${lang}: the education map must have one link`);
   const url = sandbox.window.MS_RELEASE.links.atlas[lang];
   const atlasName = lang === 'ru' ? 'Атлас ПГТ-мт' : 'PGT-mt Atlas';
   assert.ok(markup.includes(`>${atlasName} <span aria-hidden="true">↗</span></a>`), `${lang}: Atlas name must match the language`);
