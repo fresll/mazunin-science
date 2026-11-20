@@ -2,6 +2,7 @@
 window.MS_RELEASE = {
   links: {
     educationMap: 'https://edu.mazunin.science/',
+    bio: 'https://edu.mazunin.science/bio/',
     molbio: 'https://edu.mazunin.science/molbio/',
     atlas: { ru: 'https://atlas.mazunin.science/ru/', en: 'https://atlas.mazunin.science/en/' }
   },
