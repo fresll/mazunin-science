@@ -29,7 +29,8 @@ assert.ok(!entry.includes('../assets/'),'Homepage assets must resolve at the dom
 assert.equal(readFileSync(resolve(output,'CNAME'),'utf8').trim(),'mazunin.science');
 const sandbox={window:{}};
 runInNewContext(readFileSync(resolve(output,'assets/release-content.js'),'utf8'),sandbox);
-assert.equal(sandbox.window.MS_RELEASE.links.molbio,'https://edu.mazunin.science/');
+assert.equal(sandbox.window.MS_RELEASE.links.educationMap,'https://edu.mazunin.science/');
+assert.equal(sandbox.window.MS_RELEASE.links.molbio,'https://edu.mazunin.science/molbio/');
 assert.equal(sandbox.window.MS_RELEASE.links.atlas.ru,'https://atlas.mazunin.science/ru/');
 assert.equal(sandbox.window.MS_RELEASE.links.atlas.en,'https://atlas.mazunin.science/en/');
 
@@ -64,6 +65,8 @@ for (let i=0; i<3; i++) {
   assert.match(publicMarkup,new RegExp(`href="#sheet-${i}" data-sheet-nav="${i}"`));
   assert.match(publicMarkup,new RegExp(`id="sheet-${i}"`));
 }
+assert.match(publicMarkup, /href="https:\/\/edu\.mazunin\.science\/"[^>]*>Карта дисциплин /);
+assert.ok(!publicMarkup.includes('https://edu.mazunin.science/bio/'));
 assert.ok(publicMarkup.includes(sandbox.window.MS_RELEASE.links.molbio));
 for (const [search, lang] of [['', 'ru'], ['?lang=en', 'en']]) {
   const markup = renderPublic(search);
@@ -72,7 +75,7 @@ for (const [search, lang] of [['', 'ru'], ['?lang=en', 'en']]) {
   assert.ok(markup.includes(`>${atlasName} <span aria-hidden="true">↗</span></a>`), `${lang}: Atlas name must match the language`);
   assert.equal((markup.match(new RegExp(`href="${url}"`, 'g')) || []).length, 2, `${lang}: Atlas sheet and expanded action must use the correct URL`);
   assert.ok(markup.includes(`<small>${url.replace('https://','')}</small>`), `${lang}: visible Atlas address must match the link`);
-  assert.ok(markup.includes(sandbox.window.MS_RELEASE.links.molbio), `${lang}: Molbio URL must remain unchanged`);
+  assert.ok(markup.includes(sandbox.window.MS_RELEASE.links.molbio), `${lang}: Molecular biology shortcut missing`);
   assert.ok(!markup.includes('fresll.github.io/pgt-mt-atlas/'), `${lang}: old Atlas URL remains`);
 }
 for (const file of files.filter(x=>/\.(?:html|js|css|xml|txt)$/.test(x))) {

@@ -21,7 +21,8 @@
   const resourceUrl = key => key === 'atlas' ? release?.links.atlas[lang] : release?.links[key];
   const button = (key, text) => resourceUrl(key) ? `<a class="text-link resource-link" href="${resourceUrl(key)}">${text}${arrow}</a><p class="resource-address">${resourceUrl(key)}</p>` : `<button class="text-link" type="button" data-project="${key}">${text}${arrow}</button>`;
   const brand = `<a class="brand" href="#top" aria-label="MAZUNIN / SCIENCE"><span>MAZUNIN<span class="brand-slash"> /</span></span><span>SCIENCE<span class="brand-dot">.</span></span></a>`;
-  const resourceKeys = ['molbio','atlas'];
+  const resourceKeys = [isPublic ? 'educationMap' : 'molbio', 'atlas'];
+  const courseLabel = lang === 'ru' ? 'Молекулярная биология' : 'Molecular biology';
   const sheetProject = i => {
     const url = resourceUrl(resourceKeys[i]);
     return url ? `<a class="sheet-resource" href="${url}" aria-label="${t.orientationMore[i]}: ${t.orientationProjects[i]}">${t.orientationProjects[i]} ${arrow}</a><small>${url.replace('https://','')}</small>` : `<span>${t.orientationProjects[i]}</span><small>${t.orientationMore[i]}</small>`;
@@ -51,7 +52,7 @@
     return `<section class="hero folio-hero" aria-label="${t.eyebrow}">
       <div class="folio-heading"><h1 class="eyebrow">${t.eyebrow}</h1><p class="folio-intro">${t.platformSummary}</p></div>
       <div class="folio-instruction mono"><span>${lang==='ru'?'Нажмите на лист, чтобы развернуть':'Select a sheet to unfold'}</span></div>
-      <div class="folio-deck" data-open="none">${ids.slice(0,3).map((id,i)=>`<article class="folio-sheet sheet-${i}"${isPublic?` id="sheet-${i}"`:''}><span class="sheet-spine mono" aria-hidden="true">MAZUNIN / ${['EDUCATION','RESEARCH','TECHNOLOGY'][i]}</span><button class="folio-toggle" type="button" data-sheet="${i}" aria-expanded="false" aria-controls="sheet-detail-${i}"><span class="sheet-illustration">${window.MS_FOLIO.drawing(i,folioOptions.art[i].id)}</span><span class="sheet-name">${t.orientationNames[i]}</span><span class="sheet-action" aria-hidden="true">+</span></button><div class="sheet-project">${sheetProject(i)}</div><div class="sheet-detail" id="sheet-detail-${i}" hidden><p>${t.pathDescriptions[i]}</p>${sheetAction(id,i)}${isPublic ? `<span class="sheet-count mono" data-sheet-count="${i}" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="2.5"/></svg><span>${lang==='ru'?'Открытий':'Opens'}</span> <span data-count-value></span></span>` : ''}</div><span class="sheet-edge" aria-hidden="true"></span></article>`).join('')}</div>
+      <div class="folio-deck" data-open="none">${ids.slice(0,3).map((id,i)=>`<article class="folio-sheet sheet-${i}"${isPublic?` id="sheet-${i}"`:''}><span class="sheet-spine mono" aria-hidden="true">MAZUNIN / ${['EDUCATION','RESEARCH','TECHNOLOGY'][i]}</span><button class="folio-toggle" type="button" data-sheet="${i}" aria-expanded="false" aria-controls="sheet-detail-${i}"><span class="sheet-illustration">${window.MS_FOLIO.drawing(i,folioOptions.art[i].id)}</span><span class="sheet-name">${t.orientationNames[i]}</span><span class="sheet-action" aria-hidden="true">+</span></button><div class="sheet-project">${sheetProject(i)}</div><div class="sheet-detail" id="sheet-detail-${i}" hidden><p>${t.pathDescriptions[i]}</p>${sheetAction(id,i)}${isPublic && i === 0 ? `<a href="${resourceUrl('molbio')}">${courseLabel} ${arrow}</a>` : ''}${isPublic ? `<span class="sheet-count mono" data-sheet-count="${i}" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="2.5"/></svg><span>${lang==='ru'?'Открытий':'Opens'}</span> <span data-count-value></span></span>` : ''}</div><span class="sheet-edge" aria-hidden="true"></span></article>`).join('')}</div>
     </section>`;
   }
   const sectionHead = (id,kicker,title,text) => `<header class="section-heading"><p class="section-kicker mono">${variant==='c'?kicker.replace(/^\d+\s*\/\s*/, ''):kicker}</p><div><h2 id="${id}-heading">${lines(title)}</h2>${text?`<p class="section-intro">${text}</p>`:''}</div></header>`;
@@ -138,7 +139,7 @@
     });
     document.addEventListener('click', e => {
       const link = e.target.closest('a[href]');
-      const key = resourceKeys.find(k => link?.href === resourceUrl(k));
+      const key = [...resourceKeys, 'molbio'].find(k => link?.href === resourceUrl(k));
       if (key) window.MS_ANALYTICS?.event(`outbound-${key}`);
     });
   }
