@@ -1,11 +1,13 @@
 /* Owner-approved resources for the first public release. */
 window.MS_RELEASE = {
   links: {
-    molbio: 'https://edu.mazunin.science/',
+    educationMap: 'https://edu.mazunin.science/',
+    molbio: 'https://edu.mazunin.science/molbio/',
     atlas: { ru: 'https://atlas.mazunin.science/ru/', en: 'https://atlas.mazunin.science/en/' }
   },
   ru: {
-    orientationMore: ['Открыть курс', 'Открыть атлас', 'В разработке'],
+    orientationProjects: ['Карта дисциплин', 'Атлас ПГТ-мт', 'Modicum'],
+    orientationMore: ['Открыть карту', 'Открыть атлас', 'В разработке'],
     courseAction: 'Перейти к курсу', atlasAction: 'Открыть Атлас ПГТ-мт',
     molbioDesc: 'Интерактивные семинары по молекулярной биологии.',
     atlasDesc: 'Открытая база опубликованных данных о гетероплазмии мтДНК при ПГТ-мт, с указанием первоисточников.',
@@ -18,7 +20,8 @@ window.MS_RELEASE = {
     footerNote: 'Авторский проект Mazunin.', preliminary: ''
   },
   en: {
-    orientationMore: ['Open the course', 'Open the atlas', 'In development'],
+    orientationProjects: ['Course map', 'PGT-mt Atlas', 'Modicum'],
+    orientationMore: ['Open the map', 'Open the atlas', 'In development'],
     courseAction: 'Open the course', atlasAction: 'Open PGT-mt Atlas',
     molbioDesc: 'Interactive seminars in molecular biology.',
     atlasDesc: 'An open database of published mitochondrial heteroplasmy data in PGT-mt, with original sources.',
