@@ -2,7 +2,7 @@
 export const siteFiles = [
   'index.html', '404.html', 'robots.txt', 'sitemap.xml',
   'assets/og/mazunin-science-preview.png', 'assets/og/mazunin-science-preview-v2.png', 'assets/og/mazunin-science-preview-v3.png', 'assets/favicon.svg', 'assets/base.css', 'assets/atlas.css',
-  'assets/frontpage.css', 'assets/folio-refinement.css',
+  'assets/frontpage.css', 'assets/folio-refinement.css', 'assets/theme.css', 'assets/theme.js',
   'assets/content.js', 'assets/graphics.js', 'assets/folio-art.js',
   'assets/release-content.js', 'assets/analytics-config.js', 'assets/analytics.js', 'assets/app.js'
 ];

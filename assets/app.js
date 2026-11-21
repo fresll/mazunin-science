@@ -11,7 +11,7 @@
     t.aboutText = t.aboutText.replace(/независимая\s+/i, '').replace(/an independent science/i, 'a science');
     t.noNumbering = true;
     if (release) Object.assign(t,release[lang]);
-    window.MS_FOLIO.applyPalette(document.body, folioOptions.palette);
+    if (!isPublic) window.MS_FOLIO.applyPalette(document.body, folioOptions.palette);
   }
   document.documentElement.lang = lang;
   document.title = isPublic ? `MAZUNIN / SCIENCE — ${t.eyebrow}` : `MAZUNIN / SCIENCE — ${variant.toUpperCase()} · ${t.variants[variant]}`;
@@ -99,7 +99,9 @@
     <header class="site-header shell" id="top">${brand}
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-navigation">${t.menu}<span aria-hidden="true">+</span></button>
       <nav class="main-nav" id="main-navigation" aria-label="${lang==='ru'?'Основная навигация':'Main navigation'}">${isPublic?t.nav.slice(0,3).map((x,i)=>`<a href="#sheet-${i}" data-sheet-nav="${i}">${x}</a>`).join(''):t.nav.map((x,i)=>`<a href="#${ids[i]}">${x}</a>`).join('')}</nav>
+      ${isPublic ? '<div class="header-preferences">' : ''}
       <a class="language-link mono" href="?lang=${lang==='ru'?'en':'ru'}" lang="${lang==='ru'?'en':'ru'}" aria-label="${lang==='ru'?'English — preliminary translation':'Русская версия'}"><span class="lang-current">${lang.toUpperCase()}</span> / ${lang==='ru'?'EN':'RU'}</a>
+      ${isPublic ? `<select class="theme-control" data-theme-control aria-label="${lang === 'ru' ? 'Тема оформления' : 'Color theme'}" hidden><option value="auto">${lang === 'ru' ? 'Авто' : 'Auto'}</option><option value="light">${lang === 'ru' ? 'Светлая' : 'Light'}</option><option value="dark">${lang === 'ru' ? 'Тёмная' : 'Dark'}</option></select></div>` : ''}
     </header>
     <main class="shell" id="main">
       ${hero()}${isPublic?'':`<div class="content-flow">${content()}</div>`}
